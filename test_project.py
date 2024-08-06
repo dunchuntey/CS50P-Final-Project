@@ -1,5 +1,5 @@
 from pytest import raises
-from project import set_start_fret, form_skeleton, unearth_skeleton
+from skeletons import set_start_fret, form_skeleton, unearth_skeleton
 
 
 def test_set_start_fret():
