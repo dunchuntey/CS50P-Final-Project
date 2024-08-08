@@ -1,4 +1,4 @@
-# ALGORITHMIC ASYMMETRICAL SCALE GENERATOR
+# ALGORITHMIC SCALE GENERATOR
 #### [Brief video demo (for CS50P)](https://youtu.be/NX96r-2rky8)
 #### Description:
 
