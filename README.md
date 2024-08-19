@@ -1,5 +1,5 @@
 # ALGORITHMIC SCALE GENERATOR
-#### [Brief video demo (for CS50P)](https://youtu.be/NX96r-2rky8)
+#### [Brief video demo](https://youtu.be/NX96r-2rky8)
 #### Description:
 
 A module designed to algorithmically assemble asymmetrical, non-(overly)chromatic musical scales, providing output in a simplified form of tablature and (for players of non-guitar-adjacent instruments) as a list of the scale's constituent notes in letter notation.
