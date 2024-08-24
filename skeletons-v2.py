@@ -1,9 +1,47 @@
 import random
 import argparse
 import sys
-from guitar_class import Guitar
 
-guitar = Guitar()
+
+notes = {
+    0: ["C"],
+    1: ["C#", "Db"],
+    2: ["D"],
+    3: ["D#", "Eb"],
+    4: ["E"],
+    5: ["F"],
+    6: ["F#", "Gb"],
+    7: ["G"],
+    8: ["G#", "Ab"],
+    9: ["A"],
+    10: ["A#", "Bb"],
+    11: ["B"],
+    12: ["C"],
+    13: ["C#", "Db"],
+    14: ["D"],
+    15: ["D#", "Eb"],
+    16: ["E"],
+    17: ["F"],
+    18: ["F#", "Gb"],
+    19: ["G"],
+    20: ["G#", "Ab"],
+    21: ["A"],
+    22: ["A#", "Bb"],
+    23: ["B"],
+    24: ["C"],
+    25: ["C#", "Db"],
+    26: ["D"],
+    27: ["D#", "Eb"],
+    28: ["E"],
+    29: ["F"],
+    30: ["F#", "Gb"],
+    31: ["G"],
+    32: ["G#", "Ab"],
+    33: ["A"],
+    34: ["A#", "Bb"],
+    35: ["B"],
+    36: ["C"],
+}
 
 
 def main():
@@ -221,7 +259,8 @@ def form_skeleton(
                     "\nWARNING! ValueError: Length for a string grouping of 3 can be between 3 and 12."
                 )
             while True:
-                skeleton = unearth_skeleton(length, ceiling)
+                # skeleton = unearth_skeleton(length, ceiling)
+                skeleton = [0, 5, 12, 14, 15]
                 if skeleton[1] > 9:
                     continue
                 if start_fret == 0:
@@ -544,14 +583,14 @@ def set_start_fret(fret: int | str) -> int:
             raise ValueError(
                 "Starting fret: number or 'r' for random (defaults to random)."
             )
-        if fret > guitar.frets - 4:
+        if fret > 21 - 4:
             sys.exit(
                 "ValueError: Starting fret too high — you'll run out of frets!"
             )
         return fret
     elif isinstance(fret, str):
         if fret in ("r", ""):
-            return random.choice(range(0, guitar.frets - 4))
+            return random.choice(range(0, 21 - 4))
         else:
             raise ValueError(
                 "Starting fret: number or 'r' for random (defaults to random)."
@@ -588,6 +627,33 @@ def unearth_skeleton(length: int, ceiling: int) -> list[int]:
     if len(skeleton) == 1:
         raise ValueError("Can we really call '1' a length?")
     return skeleton
+
+
+def notes_from_fret(fret: int = 0, shflat: str = "#") -> list:
+    """
+    Provides notes at given fret on each string based on Guitar's tuning.
+    """
+    # Hardcoding max frets to 21
+    if fret > 21 - 4:
+        raise ValueError("Don't fret, but you'll run out of frets.")
+    if not isinstance(fret, int) or fret < 0:
+        raise ValueError("Inappropriate value for fret.")
+    fretted_notes_i = [
+        (open_string + fret - 1) % 12 + 1 for open_string in [4, 9, 2, 7, 11, 4]
+    ]
+
+    fretted_notes_s = []
+
+    for note_i in fretted_notes_i:
+        for pos, note_list in notes.items():
+            if note_i == pos:
+                if len(note_list) == 2 and shflat == "#":
+                    fretted_notes_s.append(note_list[0])
+                elif len(note_list) == 2 and shflat == "b":
+                    fretted_notes_s.append(note_list[1])
+                else:
+                    fretted_notes_s.append(note_list[0])
+    return fretted_notes_s
 
 
 def skeleton_to_fretboard(
@@ -627,7 +693,9 @@ def skeleton_to_fretboard(
         raise ValueError("Starting fret: number or 'r' for random (defaults to random).")
     starting_notes = [
         (open_string + start_fret - 1) % 12 + 1
-        for open_string in guitar.tuning_notes_idx
+        
+        # For each string in indices of notes in E standard
+        for open_string in [4, 9, 2, 7, 11, 4]
     ]
 
     string_one, string_two, string_three = (
@@ -1336,44 +1404,44 @@ def skeleton_to_fretboard(
                         )
 
             tab_print = (
-                f"{(guitar.notes_from_fret()[5]).lower():<{pad}}"
+                f"{(notes_from_fret()[5]).lower():<{pad}}"
                 f"| {"--".join(map(str, cipher[5]))}\n"
 
-                f"{(guitar.notes_from_fret()[4]).lower():<{pad}}"
+                f"{(notes_from_fret()[4]).lower():<{pad}}"
                 f"| {"--".join(map(str, cipher[3]))}\n"
 
-                f"{(guitar.notes_from_fret()[3]).lower():<{pad}}"
+                f"{(notes_from_fret()[3]).lower():<{pad}}"
                 f"| {"--".join(map(str, cipher[1]))}\n"
 
-                f"{guitar.notes_from_fret()[2]:<{pad}}"
+                f"{notes_from_fret()[2]:<{pad}}"
                 f"| {"--".join(map(str, cipher[4]))}\n"
 
-                f"{guitar.notes_from_fret()[1]:<{pad}}"
+                f"{notes_from_fret()[1]:<{pad}}"
                 f"| {"--".join(map(str, cipher[2]))}\n"
 
-                f"{guitar.notes_from_fret()[0]:<{pad}}"
+                f"{notes_from_fret()[0]:<{pad}}"
                 f"| {"--".join(map(str, cipher[0]))}"
             )
 
             return tab_print, cipher, starting_notes, start_fret, string_grouping, skeleton
 
     tab_print = (
-        f"{(guitar.notes_from_fret()[5]).lower():<{pad}}"
+        f"{(notes_from_fret()[5]).lower():<{pad}}"
         f"| {"--".join(map(str, cipher[5]))}\n"
 
-        f"{(guitar.notes_from_fret()[4]).lower():<{pad}}"
+        f"{(notes_from_fret()[4]).lower():<{pad}}"
         f"| {"--".join(map(str, cipher[2]))}\n"
 
-        f"{(guitar.notes_from_fret()[3]).lower():<{pad}}"
+        f"{(notes_from_fret()[3]).lower():<{pad}}"
         f"| {"--".join(map(str, cipher[4]))}\n"
 
-        f"{guitar.notes_from_fret()[2]:<{pad}}"
+        f"{notes_from_fret()[2]:<{pad}}"
         f"| {"--".join(map(str, cipher[1]))}\n"
 
-        f"{guitar.notes_from_fret()[1]:<{pad}}"
+        f"{notes_from_fret()[1]:<{pad}}"
         f"| {"--".join(map(str, cipher[3]))}\n"
 
-        f"{guitar.notes_from_fret()[0]:<{pad}}"
+        f"{notes_from_fret()[0]:<{pad}}"
         f"| {"--".join(map(str, cipher[0]))}"
     )
 
@@ -1410,7 +1478,7 @@ def get_skel_notes(
         appropriately applied to every string.
     """
 
-    notes_dict = guitar.notes
+    notes_dict = notes
     all_idx = []
     skel_notes = []
     match string_grouping:
