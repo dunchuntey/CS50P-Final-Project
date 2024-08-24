@@ -81,7 +81,7 @@ def optional_arguments():
     parser.add_argument(
         "-f", "--fret",
         help="Starting fret: number or 'r' for random (no argument defaults to random). "
-        "Highest allowed fret determined by the instrument's number of frets (default=21).",
+        "Highest allowed fret is 17.",
         default=""
     )
 
@@ -259,8 +259,7 @@ def form_skeleton(
                     "\nWARNING! ValueError: Length for a string grouping of 3 can be between 3 and 12."
                 )
             while True:
-                # skeleton = unearth_skeleton(length, ceiling)
-                skeleton = [0, 5, 12, 14, 15]
+                skeleton = unearth_skeleton(length, ceiling)
                 if skeleton[1] > 9:
                     continue
                 if start_fret == 0:
@@ -566,11 +565,11 @@ def form_skeleton(
 
 
 def set_start_fret(fret: int | str) -> int:
-    """Sets starting fret for skeleton and validates input from get_input().
+    """Sets starting fret for skeleton and validates optional_arguments().
     For use within form_skeleton() only.
 
     Args:
-        fret (int | str, optional): The instrument's number of frets [e.g. Guitar(frets=21)]
+        fret (int | str, optional): The instrument's number of frets
         determines the highest possible starting fret
         to allow adequate room for skeletons
         (the ceiling is frets - 4). Defaults to "r" for random choice.
@@ -631,7 +630,7 @@ def unearth_skeleton(length: int, ceiling: int) -> list[int]:
 
 def notes_from_fret(fret: int = 0, shflat: str = "#") -> list:
     """
-    Provides notes at given fret on each string based on Guitar's tuning.
+    Provides notes at given fret on each string.
     """
     # Hardcoding max frets to 21
     if fret > 21 - 4:

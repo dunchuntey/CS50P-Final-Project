@@ -527,11 +527,11 @@ def form_skeleton(
 
 
 def set_start_fret(fret: int | str) -> int:
-    """Sets starting fret for skeleton and validates input from get_input().
+    """Sets starting fret for skeleton and validates optional_arguments().
     For use within form_skeleton() only.
 
     Args:
-        fret (int | str, optional): The instrument's number of frets [e.g. Guitar(frets=21)]
+        fret (int | str, optional): The instrument's number of frets
         determines the highest possible starting fret
         to allow adequate room for skeletons
         (the ceiling is frets - 4). Defaults to "r" for random choice.
