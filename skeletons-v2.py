@@ -259,7 +259,8 @@ def form_skeleton(
                     "\nWARNING! ValueError: Length for a string grouping of 3 can be between 3 and 12."
                 )
             while True:
-                skeleton = unearth_skeleton(length, ceiling)
+                # skeleton = unearth_skeleton(length, ceiling)
+                skeleton = [0, 5, 12, 14, 15]
                 if skeleton[1] > 9:
                     continue
                 if start_fret == 0:
@@ -318,6 +319,7 @@ def form_skeleton(
                         if (
                             (skeleton[1] < 5 and skeleton[2] > 9)
                             or (skeleton[2] < 5 and skeleton[3] > 9)
+                            or (skeleton[3] < 5 and skeleton[4] > 9)
                             or (skeleton[-1] < 10)
                             or (skeleton[-2] < 5 and skeleton[-1] > 10)
                         ):
@@ -358,6 +360,7 @@ def form_skeleton(
                         if (
                             (skeleton[1] < 5 and skeleton[2] > 9)
                             or (skeleton[2] < 5 and skeleton[3] > 9)
+                            or (skeleton[3] < 5 and skeleton[4] > 9)
                             or (skeleton[-1] < 10)
                             or (skeleton[-2] < 5 and skeleton[-1] > 10)
                         ):
@@ -400,6 +403,7 @@ def form_skeleton(
                         if (
                             (skeleton[1] < 5 and skeleton[2] > 9)
                             or (skeleton[2] < 5 and skeleton[3] > 9)
+                            or (skeleton[3] < 5 and skeleton[4] > 9)
                             or (skeleton[-1] < 10)
                             or (skeleton[-2] < 5 and skeleton[-1] > 10)
                         ):
@@ -444,6 +448,7 @@ def form_skeleton(
                         if (
                             (skeleton[1] < 5 and skeleton[2] > 9)
                             or (skeleton[2] < 5 and skeleton[3] > 9)
+                            or (skeleton[3] < 5 and skeleton[4] > 9)
                             or (skeleton[-1] < 10)
                             or (skeleton[-2] < 5 and skeleton[-1] > 10)
                         ):
@@ -483,6 +488,7 @@ def form_skeleton(
                         if (
                             (skeleton[1] < 5 and skeleton[2] > 9)
                             or (skeleton[2] < 5 and skeleton[3] > 9)
+                            or (skeleton[3] < 5 and skeleton[4] > 9)
                             or (skeleton[-1] < 10)
                             or (skeleton[-2] < 5 and skeleton[-1] > 10)
                         ):
@@ -522,6 +528,7 @@ def form_skeleton(
                         if (
                             (skeleton[1] < 5 and skeleton[2] > 9)
                             or (skeleton[2] < 5 and skeleton[3] > 9)
+                            or (skeleton[3] < 5 and skeleton[4] > 9)
                             or (skeleton[-1] < 10)
                             or (skeleton[-2] < 5 and skeleton[-1] > 10)
                         ):
