@@ -211,8 +211,11 @@ def form_skeleton(
                 )
             while True:
                 skeleton = unearth_skeleton(length, ceiling)
+                # Potentially optional avoidance of severe chromatic slop at start and end of skeleton.
+                if skeleton[-3:-1] == [7,8] and skeleton[-1] == 9 and skeleton[1] == 1:
+                    continue
                 # Ensuring no skeletons over 2 in length have major 6th as second note.
-                if len(skeleton) > 2 and skeleton[1] == 9:
+                elif len(skeleton) > 2 and skeleton[1] == 9:
                     continue
                 # Ensuring valid skeletons of 2 in length.
                 elif (
@@ -260,6 +263,9 @@ def form_skeleton(
                 )
             while True:
                 skeleton = unearth_skeleton(length, ceiling)
+                # Potentially optional avoidance of severe chromatic slop at start and end of skeleton.
+                if skeleton[-3:-1] == [12,13] and skeleton[-1] == 14 and skeleton[1] == 1:
+                    continue
                 if skeleton[1] > 9:
                     continue
                 if start_fret == 0:
@@ -626,33 +632,6 @@ def unearth_skeleton(length: int, ceiling: int) -> list[int]:
     if len(skeleton) == 1:
         raise ValueError("Can we really call '1' a length?")
     return skeleton
-
-
-def notes_from_fret(fret: int = 0, shflat: str = "#") -> list:
-    """
-    Provides notes at given fret on each string.
-    """
-    # Hardcoding max frets to 21
-    if fret > 21 - 4:
-        raise ValueError("Don't fret, but you'll run out of frets.")
-    if not isinstance(fret, int) or fret < 0:
-        raise ValueError("Inappropriate value for fret.")
-    fretted_notes_i = [
-        (open_string + fret - 1) % 12 + 1 for open_string in [4, 9, 2, 7, 11, 4]
-    ]
-
-    fretted_notes_s = []
-
-    for note_i in fretted_notes_i:
-        for pos, note_list in notes.items():
-            if note_i == pos:
-                if len(note_list) == 2 and shflat == "#":
-                    fretted_notes_s.append(note_list[0])
-                elif len(note_list) == 2 and shflat == "b":
-                    fretted_notes_s.append(note_list[1])
-                else:
-                    fretted_notes_s.append(note_list[0])
-    return fretted_notes_s
 
 
 def skeleton_to_fretboard(
@@ -1403,44 +1382,44 @@ def skeleton_to_fretboard(
                         )
 
             tab_print = (
-                f"{(notes_from_fret()[5]).lower():<{pad}}"
+                f"{"e":<{pad}}"
                 f"| {"--".join(map(str, cipher[5]))}\n"
 
-                f"{(notes_from_fret()[4]).lower():<{pad}}"
-                f"| {"--".join(map(str, cipher[3]))}\n"
-
-                f"{(notes_from_fret()[3]).lower():<{pad}}"
-                f"| {"--".join(map(str, cipher[1]))}\n"
-
-                f"{notes_from_fret()[2]:<{pad}}"
-                f"| {"--".join(map(str, cipher[4]))}\n"
-
-                f"{notes_from_fret()[1]:<{pad}}"
+                f"{"b":<{pad}}"
                 f"| {"--".join(map(str, cipher[2]))}\n"
 
-                f"{notes_from_fret()[0]:<{pad}}"
+                f"{"g":<{pad}}"
+                f"| {"--".join(map(str, cipher[4]))}\n"
+
+                f"{"D":<{pad}}"
+                f"| {"--".join(map(str, cipher[1]))}\n"
+
+                f"{"A":<{pad}}"
+                f"| {"--".join(map(str, cipher[3]))}\n"
+
+                f"{"E":<{pad}}"
                 f"| {"--".join(map(str, cipher[0]))}"
             )
 
             return tab_print, cipher, starting_notes, start_fret, string_grouping, skeleton
 
     tab_print = (
-        f"{(notes_from_fret()[5]).lower():<{pad}}"
+        f"{"e":<{pad}}"
         f"| {"--".join(map(str, cipher[5]))}\n"
 
-        f"{(notes_from_fret()[4]).lower():<{pad}}"
+        f"{"b":<{pad}}"
         f"| {"--".join(map(str, cipher[2]))}\n"
 
-        f"{(notes_from_fret()[3]).lower():<{pad}}"
+        f"{"g":<{pad}}"
         f"| {"--".join(map(str, cipher[4]))}\n"
 
-        f"{notes_from_fret()[2]:<{pad}}"
+        f"{"D":<{pad}}"
         f"| {"--".join(map(str, cipher[1]))}\n"
 
-        f"{notes_from_fret()[1]:<{pad}}"
+        f"{"A":<{pad}}"
         f"| {"--".join(map(str, cipher[3]))}\n"
 
-        f"{notes_from_fret()[0]:<{pad}}"
+        f"{"E":<{pad}}"
         f"| {"--".join(map(str, cipher[0]))}"
     )
 
